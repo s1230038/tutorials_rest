@@ -19,4 +19,12 @@ class LoadDatabase {
       log.info("Preloading " + repository.save(new Employee("Frodo Baggins", "thief")));
     };
   }
+
+  @Bean
+  CommandLineRunner initDatabaseTest() {
+    log.info("log outside args arrow");
+    return args -> {
+      log.info("log inside args arrow");
+    };
+  }
 }
