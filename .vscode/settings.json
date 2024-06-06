@@ -1,7 +1,9 @@
 {
     "java.compile.nullAnalysis.mode": "automatic",
     "cSpell.words": [
-        "Baggins"
+        "Baggins",
+        "hateoas",
+        "springframework"
     ],
     "java.configuration.updateBuildConfiguration": "automatic"
 }
