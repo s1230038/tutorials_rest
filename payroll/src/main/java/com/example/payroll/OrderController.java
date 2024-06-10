@@ -53,14 +53,23 @@ class OrderController {
   }
 
   @PostMapping("/orders")
-  ResponseEntity<EntityModel<Order>> newOrder(@RequestBody Order order) {
+  ResponseEntity<?>  newOrder(@RequestBody Order order) {
 
     order.setStatus(Status.IN_PROGRESS);
     Order newOrder = orderRepository.save(order);
 
-    return ResponseEntity //
+    if(order.getStatus() == Status.IN_CART){
+        return ResponseEntity //
         .created(linkTo(methodOn(OrderController.class).one(newOrder.getId())).toUri()) //
         .body(assembler.toModel(newOrder));
+    }
+
+    return ResponseEntity //
+    .status(HttpStatus.METHOD_NOT_ALLOWED) //
+    .header(HttpHeaders.CONTENT_TYPE, MediaTypes.HTTP_PROBLEM_DETAILS_JSON_VALUE) //
+    .body(Problem.create() //
+        .withTitle("Method not allowed") //
+        .withDetail("You can't order an item that is in the " + order.getStatus() + " status"));
   }
 
   @DeleteMapping("/orders/{id}/cancel")
@@ -69,7 +78,7 @@ class OrderController {
   Order order = orderRepository.findById(id) //
       .orElseThrow(() -> new OrderNotFoundException(id));
 
-  if (order.getStatus() == Status.IN_PROGRESS) {
+  if (order.getStatus() == Status.IN_PROGRESS || order.getStatus() == Status.IN_CART) {
       order.setStatus(Status.CANCELLED);
       return ResponseEntity.ok(assembler.toModel(orderRepository.save(order)));
   }
