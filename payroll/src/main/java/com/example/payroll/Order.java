@@ -18,10 +18,6 @@ class Order {
 
   Order() {}
 
-  Order(String description) {
-    this(description, Status.ORDERED);
-  }
-  
   Order(String description, Status status) {
 
     this.description = description;
