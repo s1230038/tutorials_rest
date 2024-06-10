@@ -20,7 +20,7 @@ class OrderModelAssembler implements RepresentationModelAssembler<Order, EntityM
 
     // Conditional links based on state of the order
 
-    if (order.getStatus() == Status.IN_PROGRESS) {
+    if (order.getStatus() == Status.ORDERED) {
       orderModel.add(linkTo(methodOn(OrderController.class).cancel(order.getId())).withRel("cancel"));
       orderModel.add(linkTo(methodOn(OrderController.class).complete(order.getId())).withRel("complete"));
     }

@@ -2,7 +2,8 @@ package com.example.payroll;
 
 enum Status {
 
-    IN_PROGRESS, //
-    COMPLETED, //
+    ORDERED,     //
+    IN_SHIPPING, //
+    COMPLETED,   //
     CANCELLED
   }
