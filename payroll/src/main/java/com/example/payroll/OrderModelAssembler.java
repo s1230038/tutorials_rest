@@ -22,6 +22,11 @@ class OrderModelAssembler implements RepresentationModelAssembler<Order, EntityM
 
     if (order.getStatus() == Status.ORDERED) {
       orderModel.add(linkTo(methodOn(OrderController.class).cancel(order.getId())).withRel("cancel"));
+      orderModel.add(linkTo(methodOn(OrderController.class).complete(order.getId())).withRel("ship"));
+    }
+
+    if (order.getStatus() == Status.IN_SHIPPING) {
+      orderModel.add(linkTo(methodOn(OrderController.class).cancel(order.getId())).withRel("cancel"));
       orderModel.add(linkTo(methodOn(OrderController.class).complete(order.getId())).withRel("complete"));
     }
 
