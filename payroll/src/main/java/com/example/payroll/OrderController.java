@@ -54,8 +54,9 @@ class OrderController {
 
   @PostMapping("/orders")
   ResponseEntity<EntityModel<Order>> newOrder(@RequestBody Order order) {
-
-    // order.setStatus(Status.ORDERED);
+    if(order.getStatus() == null){
+        order.setStatus(Status.ORDERED);
+    }
     Order newOrder = orderRepository.save(order);
 
     return ResponseEntity //
